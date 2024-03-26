@@ -3,6 +3,7 @@ import './index.css';
 import { Container, Header} from './sections/index.js'
 import { Home, OmOs, Kontakt } from './pages/index.js'
 
+//test workflow v2
 
 function App() {
   return (
@@ -14,7 +15,6 @@ function App() {
               <Route path='/' element={<Home/>}/>
               <Route path='/kontakt' element={<Kontakt/>}/>
               <Route path='/om-os' element={<OmOs/>}/>
-  
               </Routes> 
             </Container>
         </Router>
