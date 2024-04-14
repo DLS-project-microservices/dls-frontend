@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AuthOutlet from '@auth-kit/react-router/AuthOutlet'
-import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
-
 import './index.css';
 import { Container, Header} from './sections/index.js'
 import { Home, OmOs, Kontakt, Login, Orders } from './pages/index.js'
