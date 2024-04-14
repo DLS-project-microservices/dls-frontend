@@ -1,9 +1,18 @@
 import {Link} from 'react-router-dom'
-
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
+import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import './Header.css'
 import logo from '../../assets/logo/DLS.png'
 
 const Header = () => {
+  const signOut = useSignOut();
+  const isAuthenticated = useIsAuthenticated();
+
+  function logout() {
+    signOut();
+    window.location.reload();
+  }
+
   return (
     <nav className="navbar navbar-expand-md " >
             
@@ -34,9 +43,21 @@ const Header = () => {
             <li className="nav-item">
             <Link className="dls-nav-link nav-link "  to="/om-os">Om Os</Link>
             </li>
+            { isAuthenticated === false ?
             <li className="nav-item">
             <Link className="dls-nav-link nav-link "  to="/login">Login</Link>
             </li>  
+            :
+            <>
+            <li className="nav-item">
+            <Link className="dls-nav-link nav-link " to="/" onClick={logout}>Logout</Link>
+            </li>
+            <li className="nav-item">
+            <Link className="dls-nav-link nav-link "  to="/orders">Orders</Link>
+            </li>
+            </>
+            
+            }
 
         </ul> 
 

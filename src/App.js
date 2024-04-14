@@ -1,24 +1,16 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import AuthProvider from 'react-auth-kit';
 import AuthOutlet from '@auth-kit/react-router/AuthOutlet'
-import createStore from 'react-auth-kit/createStore';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated'
+
 import './index.css';
 import { Container, Header} from './sections/index.js'
 import { Home, OmOs, Kontakt, Login, Orders } from './pages/index.js'
-
-const store = createStore({
-  authName:'_auth',
-  authType:'cookie',
-  cookieDomain: window.location.hostname,
-  cookieSecure: false
-});
 
 function App() {
   return (
     <>
         <Router>
             <Header />
-            <AuthProvider store={store}>
               <Container>
                 <Routes>
                 <Route path='/' element={<Home/>}/>
@@ -31,7 +23,6 @@ function App() {
     
                 </Routes> 
               </Container>
-            </AuthProvider>
         </Router>
      
     </>
