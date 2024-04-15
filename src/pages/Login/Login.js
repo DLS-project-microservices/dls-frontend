@@ -34,7 +34,8 @@ const Login = () => {
                 },
                 body: JSON.stringify({
                     email,
-                    password
+                    password,
+                    frontendUserType: "customer"
                 })
             });
             const data = await response.json();
