@@ -10,6 +10,7 @@ const Header = () => {
 
   function logout() {
     signOut();
+    window.location.reload();
   }
 
   return (
