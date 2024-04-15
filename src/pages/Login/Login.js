@@ -1,57 +1,89 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import './Login.css';
+import toastr from 'toastr';
+import 'toastr/build/toastr.css';
 import { useNavigate } from 'react-router-dom';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
+import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 
 const Login = () => {
+    const isAuthenticated = useIsAuthenticated();
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isFormValid, setIsFormValid] = useState(false);
     const signIn = useSignIn();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/')
+        }
+    }, [])
+
+    useEffect(() => {
+        setIsFormValid(email !== '' && password !== '');
+    }, [email, password])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const response = await fetch(`${process.env.REACT_APP_AUTH_URL}/users/signin`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                email,
-                password
-            })
-        });
-        const data = await response.json();
-        console.log(data.email);
-        if (response.ok) {
-            signIn({
-                auth: {
-                    token: data.token,
-                    type: "Bearer",
+        try {
+            const response = await fetch(`${process.env.REACT_APP_AUTH_URL}/users/signin`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
                 },
-                userState: {
-                    email: data.email
-                }
-            })
-            
-            navigate('/')
-            window.location.reload();
+                body: JSON.stringify({
+                    email,
+                    password
+                })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                signIn({
+                    auth: {
+                        token: data.token,
+                        type: "Bearer",
+                    },
+                    userState: {
+                        email: data.email,
+                        firstName: data.firstName,
+                        lastName: data.lastName
+                    }
+                });
+                navigate('/');
+                window.location.reload();
+            }
+            else {
+                toastr.error(data.error);
+            }
         }
+        catch(error) {
+            toastr.error('Something went wrong. Please try again later.')
+        }  
     }
 
     return (
-        <div>
-        <h2>Login Page</h2>
-        <form onSubmit={handleSubmit}>
-            <div>
-            <label>Email:</label>
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div className="page-container">
+            <div className="form-container">
+                <form onSubmit={handleSubmit}>
+                    <div className="form-header">
+                            <h1>Login</h1>
+                            </div>
+                    <div className="form-section">
+                        <label>Email:</label>
+                        <input className="input-field" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    </div>
+                    <div className="form-section">
+                        <label>Password:</label>
+                        <input className="input-field" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    </div>
+                    <div className="form-btn-container">
+                    <button className="add-item-btn" type="submit" disabled={!isFormValid}>
+                        Login
+                    </button>
+                    </div>
+                </form>
             </div>
-            <div>
-            <label>Password:</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            </div>
-            <button type="submit">Login</button>
-        </form>
         </div>
     );
 }
