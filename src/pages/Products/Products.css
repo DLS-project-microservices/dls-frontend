@@ -1,0 +1,5 @@
+.product-list-container {
+    border: solid;
+    display: flex;
+    justify-content: space-between;
+}
