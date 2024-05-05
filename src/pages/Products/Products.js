@@ -1,5 +1,6 @@
 import './Products.css'
 import { useEffect, useState } from 'react'
+import ProductCard from '../../components/products/ProductCard/ProductCard';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
@@ -15,17 +16,11 @@ useEffect(() => {
     fetchProducts();
 }, [])
   return (
-    <>
     <div className="product-list-container">
-        { products.map(product => (
-            <div>
-            <h1>{product.name}</h1>
-            <h1>{product.description}</h1>
-            <h1>{product.price ?? 'MISSING PRICE'}</h1>
-            </div>
-        ))}
+        {products.map(product => (
+            <ProductCard key={product.id} product={product} />
+            ))}
     </div>
-    </>
   )
 }
 
