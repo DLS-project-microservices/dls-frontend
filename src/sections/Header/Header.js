@@ -3,13 +3,12 @@ import { Link } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import './Header.css';
+import ShoppingCart from '../../components/shoppingCart/ShoppingCart/ShoppingCart';
 import logo from '../../assets/logo/DLS.png';
-import { useShoppingCart } from '../../contexts/ShoppingCartContext';
 
 const Header = () => {
   const signOut = useSignOut();
   const isAuthenticated = useIsAuthenticated();
-  const { getItemTotal } = useShoppingCart();
 
   const [loggedIn, setLoggedIn] = useState(isAuthenticated);
 
@@ -88,9 +87,7 @@ const Header = () => {
               </li>
             )}
             <li className="nav-item">
-                <Link className="dls-nav-link nav-link " to="/login">
-                  { getItemTotal() === 0 ? 'Empty Cart': getItemTotal() }
-                </Link>
+                  <ShoppingCart/>
               </li>
           </ul>
         </div>

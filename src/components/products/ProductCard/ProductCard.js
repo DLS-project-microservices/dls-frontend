@@ -1,10 +1,7 @@
 import './ProductCard.css';
 import testImage from '../../../assets/products/sunglasses.jpg'
-import ProductCardCategory from '../ProductCardCategory/ProductCardCategory';
 import { useShoppingCart } from '../../../contexts/ShoppingCartContext';
 import { useState } from 'react';
-
-
 
 const ProductCard = ({ product }) => {
     const { addItemToCart, getItemTotal } = useShoppingCart();
@@ -39,10 +36,12 @@ const ProductCard = ({ product }) => {
                 <img className="nav-logo" src={testImage} alt="Site Logo" />
             </div>
 
-            <div className="product-card-information">
-                <h1>{product.name}</h1>
-                <p>{product.description}</p>
-                <h3>{product.price ?? 'MISSING PRICE'}</h3>
+            <div className="product-card-information-container">
+                <h3>{product.name}</h3>
+                <div className="product-card-information-description-container">
+                    <p>{product.description}</p>
+                </div>
+                <h4>${product.price ?? 'MISSING PRICE'}</h4>
             </div>
 
             <div className="product-card-button-container">
@@ -58,16 +57,7 @@ const ProductCard = ({ product }) => {
             <div className="product-card-add-to-cart-button-container">
                 <button onClick={addToCart}>Add to cart</button>
                 
-            </div>
-
-            <div className="product-card-category-list">
-                {product.categories.map(category => {
-                    return (
-                        <ProductCardCategory key={category._id} category={category} />       
-                    )
-                })}
-            </div>
-            
+            </div>        
         </div>
     )
 }
