@@ -5,12 +5,11 @@ import ProductCard from '../../components/products/ProductCard/ProductCard';
 const Products = () => {
     const [products, setProducts] = useState([]);
 
-
 useEffect(() => {
     async function fetchProducts() {
         const response = await fetch(`${process.env.REACT_APP_CUSTOMER_INVENTORY_URL}/products`);
         const data = await response.json();
-        setProducts(data);
+        setProducts(data.data);
     }
 
     fetchProducts();
@@ -18,7 +17,7 @@ useEffect(() => {
   return (
     <div className="product-list-container">
         {products.map(product => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product._id} product={product} />
             ))}
     </div>
   )

@@ -1,12 +1,13 @@
 import './ProductCard.css';
 import testImage from '../../../assets/products/sunglasses.jpg'
 import ProductCardCategory from '../ProductCardCategory/ProductCardCategory';
+import { useShoppingCart } from '../../../contexts/ShoppingCartContext';
 import { useState } from 'react';
 
 
 
 const ProductCard = ({ product }) => {
-
+    const { addItemToCart, getItemTotal } = useShoppingCart();
     const [selectedQuantity, setSelectedQuantity] = useState(1);
 
     const incrementQuantity = () => {
@@ -24,6 +25,12 @@ const ProductCard = ({ product }) => {
         if (value >= 1) {
             setSelectedQuantity(value);
         }
+    }
+
+    const addToCart = () => {
+        addItemToCart({ ...product, selectedQuantity });
+        setSelectedQuantity(1);
+        console.log(getItemTotal());
     }
 
     return (
@@ -49,14 +56,14 @@ const ProductCard = ({ product }) => {
                 
             </div>
             <div className="product-card-add-to-cart-button-container">
-                <button>Add to cart</button>
+                <button onClick={addToCart}>Add to cart</button>
                 
             </div>
 
             <div className="product-card-category-list">
                 {product.categories.map(category => {
                     return (
-                        <ProductCardCategory key={category.id} category={category} />       
+                        <ProductCardCategory key={category._id} category={category} />       
                     )
                 })}
             </div>

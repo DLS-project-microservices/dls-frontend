@@ -4,6 +4,7 @@ import AuthProvider from 'react-auth-kit';
 import createStore from 'react-auth-kit/createStore';
 import './index.css';
 import App from './App';
+import { ShoppingCartProvider } from './contexts/ShoppingCartContext';
 
 const store = createStore({
   authName:'_auth',
@@ -16,7 +17,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthProvider store={store}>
-      <App />
+      <ShoppingCartProvider>
+        <App />
+      </ShoppingCartProvider>
     </AuthProvider>
   </React.StrictMode>
 );
