@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
 import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import './Header.css';
+import ShoppingCart from '../../components/shoppingCart/ShoppingCart/ShoppingCart';
 import logo from '../../assets/logo/DLS.png';
 
 const Header = () => {
@@ -48,6 +49,12 @@ const Header = () => {
             </li>
 
             <li className="nav-item">
+              <Link className="dls-nav-link nav-link" to="/products">
+                Products
+              </Link>
+            </li>
+
+            <li className="nav-item">
               <Link className="dls-nav-link nav-link" to="/kontakt">
                 Kontakt
               </Link>
@@ -79,6 +86,9 @@ const Header = () => {
                 </Link>
               </li>
             )}
+            <li className="nav-item">
+                  <ShoppingCart/>
+              </li>
           </ul>
         </div>
       </div>

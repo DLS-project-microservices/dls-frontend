@@ -1,0 +1,6 @@
+.product-list-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Four equal-sized columns */
+    gap: 10px; /* Gap between items */
+    padding: 20px;
+}

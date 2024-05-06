@@ -1,0 +1,13 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.shopping-cart-total {
+    margin-top: 30px;
+}
+
+.shopping-cart-clear-cart-button {
+    margin-top: 10px;
+}
+  
