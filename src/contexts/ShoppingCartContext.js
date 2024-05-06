@@ -26,7 +26,8 @@ export const ShoppingCartProvider = ({ children }) => {
   };
 
   const removeItemFromCart = (itemId) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
+    console.log(itemId);
+    setCart((prevCart) => prevCart.filter((item) => item._id !== itemId));
   };
 
   const clearCart = () => {
