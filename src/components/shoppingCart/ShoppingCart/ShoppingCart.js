@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import ShoppingCartLineItem from '../ShoppingCartLineItem/ShoppingCartLineItem';
@@ -29,8 +30,9 @@ function ShoppingCart() {
         </Offcanvas.Header>
         <Offcanvas.Body>
         {cart.length === 0 ? (
-                        <p>Your cart is empty.</p>
+                        <h5>Your cart is empty.</h5>
                     ) : (
+                      <>
                         <table>
                             <thead>
                                 <tr>
@@ -57,8 +59,18 @@ function ShoppingCart() {
                                   
                            
                             </tbody>
-                            <Button variant="danger" className="shopping-cart-clear-cart-button" onClick={clearCart}>Clear Cart</Button>
+                            
+            
                         </table>
+                        <div className='shopping-cart-button-container'>
+                        <Button variant="danger" className="shopping-cart-button shopping-cart-clear-cart-button" onClick={clearCart}>Clear Cart</Button>
+
+                        <Link to="/checkout">
+                          
+                        <Button className="shopping-cart-button" onClick={handleClose}>Go to checkout</Button>
+                        </Link>
+                      </div>
+                      </>
                         
                     )}
         </Offcanvas.Body>

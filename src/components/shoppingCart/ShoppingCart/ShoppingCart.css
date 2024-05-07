@@ -7,7 +7,14 @@ table {
     margin-top: 30px;
 }
 
-.shopping-cart-clear-cart-button {
-    margin-top: 10px;
+.shopping-cart-button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.shopping-cart-button {
+    height: 200;
+    width: 150px;
 }
   
