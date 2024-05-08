@@ -1,11 +1,38 @@
 import './Checkout.css'
+import Button from 'react-bootstrap/Button';
 import { useShoppingCart } from '../../contexts/ShoppingCartContext';
+import CheckoutLineItem from '../../components/checkout/CheckoutLineItem/CheckoutLineItem';
 import { useEffect } from 'react';
-import testImage from '../../assets/products/sunglasses.jpg';
 
 const Checkout = () => {
-    const { cart, removeItemFromCart } = useShoppingCart();
+    const { cart, clearCart, getPriceTotal } = useShoppingCart();
 
+    // TODO the endpoint is not implemented yet. uncomment and edit URL and stuff when it is.
+    async function createCheckoutSession() {
+      alert('ENDPOINT NOT IMPLEMENTED YET')
+      /*
+      const selectedProducts = {
+        lineItems: cart.map((lineItem) => {
+          return {
+            id: lineItem.id,
+            quantity: lineItem.selectedQuantity
+          }
+        })
+      }
+      console.log(selectedProducts);
+      const response = await fetch(`${process.env.REACT_APP_CUSTOMER_INVENTORY_URL}/checkout-session`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(selectedProducts)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        window.location = data.sessionUrl;
+      }
+       */
+    }
+   
     useEffect(() => {
         if (cart.length === 0) {
             window.location = '/products';
@@ -28,28 +55,20 @@ const Checkout = () => {
             <tbody>
               {cart.map((lineItem) => {
                 return (
-                    <tr key={lineItem._id}>
-                      <td><img className="checkout-product-image" alt={lineItem.name} src={testImage}></img></td>
-                      <td className="checkout-product-name">{lineItem.name}</td>
-                      <td>{lineItem.selectedQuantity}</td>
-                      <td>${lineItem.price}</td>
-                      <td>${lineItem.price * lineItem.selectedQuantity}</td>
-                      <td>
-                      <button 
-                className="shopping-cart-line-item-remove-button"
-                onClick={() => {
-                    console.log('click');
-                    console.log(lineItem._id)
-                    removeItemFromCart(lineItem._id);
-                }}>X
-                </button>
-                      </td>
-                    </tr>
+                    <CheckoutLineItem key={lineItem._id} lineItem={lineItem}></CheckoutLineItem>
                 )
               })}
             </tbody>
           </table>
-            
+          <h5 className="shopping-cart-total">Total price: ${getPriceTotal()}</h5>
+          <div className="checkout-button-container">
+            <Button variant="danger" onClick={clearCart}>
+              Clear shopping cart
+            </Button>
+            <Button variant="primary" onClick={createCheckoutSession}>
+              Proceed to payment
+            </Button>
+          </div>
         </div>
   )
 }

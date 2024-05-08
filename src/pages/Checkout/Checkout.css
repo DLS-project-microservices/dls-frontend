@@ -4,6 +4,7 @@
 }
 
 table {
+    margin-top: 20px;
     width: 100%;
     border-collapse: collapse;
 }
@@ -19,6 +20,9 @@ td {
     max-width: 20ch;
 }
 
-th {
-    background-color: inherit;
-  }
+.checkout-button-container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}

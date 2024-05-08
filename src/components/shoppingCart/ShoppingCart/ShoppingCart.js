@@ -8,15 +8,11 @@ import { useShoppingCart } from '../../../contexts/ShoppingCartContext';
 
 
 function ShoppingCart() {
-    const { cart, getItemTotal, clearCart } = useShoppingCart();
+    const { cart, getItemTotal, clearCart, getPriceTotal } = useShoppingCart();
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    const total = cart.reduce((acc, item) => {
-      return acc + (item.price * item.selectedQuantity);
-    }, 0);
 
     return (
     <>
@@ -51,11 +47,11 @@ function ShoppingCart() {
                                             lineItem={lineItem} />
                                     )
                                 })}
-                                    <h4 className="shopping-cart-total">
-                                      Total: ${total}
-                                    </h4>
+                                    
                             </tbody>
                         </table>
+
+                        <h5 className="shopping-cart-total">Total: ${getPriceTotal()}</h5>
 
                         <div className='shopping-cart-button-container'>
                         <Button variant="danger" className="shopping-cart-button shopping-cart-clear-cart-button" onClick={clearCart}>Clear Cart</Button>
