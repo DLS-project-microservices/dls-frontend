@@ -12,22 +12,29 @@ const Checkout = () => {
       const selectedProducts = {
         items: cart.map((lineItem) => {
           return {
-            productId: lineItem.id,
+            productId: lineItem._id,
             quantity: lineItem.selectedQuantity
           }
         })
       }
 
-      const response = await fetch(`${process.env.REACT_APP_CUSTOMER_INVENTORY_URL}/payment`, {
-        method: "POST",
-        body: JSON.stringify(selectedProducts)
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        window.location = data.sessionId;
+      console.log(selectedProducts);
+      try {
+        const response = await fetch(`${process.env.REACT_APP_CUSTOMER_INVENTORY_URL}/payment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(selectedProducts)
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          window.location = data.sessionId;
+        }
       }
-      else {
+      catch(error) {
+        console.log(error);
         toastr.error('There was an error while trying to check out. Please try again later.')
       }
     }
