@@ -51,23 +51,17 @@ function ShoppingCart() {
                                             lineItem={lineItem} />
                                     )
                                 })}
-                  
                                     <h4 className="shopping-cart-total">
                                       Total: ${total}
                                     </h4>
-                                    
-                                  
-                           
                             </tbody>
-                            
-            
                         </table>
+
                         <div className='shopping-cart-button-container'>
                         <Button variant="danger" className="shopping-cart-button shopping-cart-clear-cart-button" onClick={clearCart}>Clear Cart</Button>
 
                         <Link to="/checkout">
-                          
-                        <Button className="shopping-cart-button" onClick={handleClose}>Go to checkout</Button>
+                          <Button className="shopping-cart-button" onClick={handleClose}>Go to checkout</Button>
                         </Link>
                       </div>
                       </>

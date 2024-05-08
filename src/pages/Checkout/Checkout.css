@@ -1,0 +1,24 @@
+.checkout-product-image {
+    width: 150px;
+    height: 150px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+td {
+    font-size: larger;
+}
+
+.checkout-product-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 20ch;
+}
+
+th {
+    background-color: inherit;
+  }

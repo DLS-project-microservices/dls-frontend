@@ -3,6 +3,7 @@ import AuthOutlet from '@auth-kit/react-router/AuthOutlet'
 import './index.css';
 import { Container, Header} from './sections/index.js'
 import { Home, OmOs, Kontakt, Login, Orders, Products } from './pages/index.js'
+import Checkout from './pages/Checkout/Checkout.js';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           
                 <Route element={<AuthOutlet fallbackPath='/login' />}>
                   <Route path='/orders' element={<Orders/>}/>
+                  <Route path='/checkout' element={<Checkout/>}/>
                 </Route>
     
                 </Routes> 
