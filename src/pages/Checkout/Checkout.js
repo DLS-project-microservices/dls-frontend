@@ -1,5 +1,6 @@
 import './Checkout.css'
 import Button from 'react-bootstrap/Button';
+import toastr from 'toastr';
 import { useShoppingCart } from '../../contexts/ShoppingCartContext';
 import CheckoutLineItem from '../../components/checkout/CheckoutLineItem/CheckoutLineItem';
 import { useEffect } from 'react';
@@ -7,30 +8,28 @@ import { useEffect } from 'react';
 const Checkout = () => {
     const { cart, clearCart, getPriceTotal } = useShoppingCart();
 
-    // TODO the endpoint is not implemented yet. uncomment and edit URL and stuff when it is.
     async function createCheckoutSession() {
-      alert('ENDPOINT NOT IMPLEMENTED YET')
-      /*
       const selectedProducts = {
-        lineItems: cart.map((lineItem) => {
+        items: cart.map((lineItem) => {
           return {
-            id: lineItem.id,
+            productId: lineItem.id,
             quantity: lineItem.selectedQuantity
           }
         })
       }
-      console.log(selectedProducts);
-      const response = await fetch(`${process.env.REACT_APP_CUSTOMER_INVENTORY_URL}/checkout-session`, {
+
+      const response = await fetch(`${process.env.REACT_APP_CUSTOMER_INVENTORY_URL}/payment`, {
         method: "POST",
-        credentials: "include",
         body: JSON.stringify(selectedProducts)
       });
 
       if (response.ok) {
         const data = await response.json();
-        window.location = data.sessionUrl;
+        window.location = data.sessionId;
       }
-       */
+      else {
+        toastr.error('There was an error while trying to check out. Please try again later.')
+      }
     }
    
     useEffect(() => {
