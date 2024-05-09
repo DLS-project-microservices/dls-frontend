@@ -26,7 +26,6 @@ export const ShoppingCartProvider = ({ children }) => {
   };
 
   const removeItemFromCart = (itemId) => {
-    console.log(itemId);
     setCart((prevCart) => prevCart.filter((item) => item._id !== itemId));
   };
 
@@ -38,9 +37,13 @@ export const ShoppingCartProvider = ({ children }) => {
     return cart.reduce((total, product) => total + product.selectedQuantity, 0);
   }
 
+  const getPriceTotal = () => {
+    return cart.reduce((acc, item) => acc + (item.price * item.selectedQuantity), 0);
+  }
+
   return (
     <ShoppingCartContext.Provider
-      value={{ cart, addItemToCart, removeItemFromCart, clearCart, getItemTotal
+      value={{ cart, addItemToCart, removeItemFromCart, clearCart, getItemTotal, getPriceTotal
        }}
     >
       {children}

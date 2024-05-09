@@ -27,7 +27,6 @@ const ProductCard = ({ product }) => {
     const addToCart = () => {
         addItemToCart({ ...product, selectedQuantity });
         setSelectedQuantity(1);
-        console.log(getItemTotal());
     }
 
     return (

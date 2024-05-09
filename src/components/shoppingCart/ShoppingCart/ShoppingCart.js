@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import ShoppingCartLineItem from '../ShoppingCartLineItem/ShoppingCartLineItem';
@@ -7,15 +8,11 @@ import { useShoppingCart } from '../../../contexts/ShoppingCartContext';
 
 
 function ShoppingCart() {
-    const { cart, getItemTotal, clearCart } = useShoppingCart();
+    const { cart, getItemTotal, clearCart, getPriceTotal } = useShoppingCart();
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    const total = cart.reduce((acc, item) => {
-      return acc + (item.price * item.selectedQuantity);
-    }, 0);
 
     return (
     <>
@@ -29,8 +26,9 @@ function ShoppingCart() {
         </Offcanvas.Header>
         <Offcanvas.Body>
         {cart.length === 0 ? (
-                        <p>Your cart is empty.</p>
+                        <h5>Your cart is empty.</h5>
                     ) : (
+                      <>
                         <table>
                             <thead>
                                 <tr>
@@ -49,16 +47,20 @@ function ShoppingCart() {
                                             lineItem={lineItem} />
                                     )
                                 })}
-                  
-                                    <h4 className="shopping-cart-total">
-                                      Total: ${total}
-                                    </h4>
                                     
-                                  
-                           
                             </tbody>
-                            <Button variant="danger" className="shopping-cart-clear-cart-button" onClick={clearCart}>Clear Cart</Button>
                         </table>
+
+                        <h5 className="shopping-cart-total">Total: ${getPriceTotal()}</h5>
+
+                        <div className='shopping-cart-button-container'>
+                        <Button variant="danger" className="shopping-cart-button shopping-cart-clear-cart-button" onClick={clearCart}>Clear Cart</Button>
+
+                        <Link to="/checkout">
+                          <Button className="shopping-cart-button" onClick={handleClose}>Go to checkout</Button>
+                        </Link>
+                      </div>
+                      </>
                         
                     )}
         </Offcanvas.Body>
