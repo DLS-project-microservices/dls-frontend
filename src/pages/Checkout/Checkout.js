@@ -18,9 +18,8 @@ const Checkout = () => {
         })
       }
 
-      console.log(selectedProducts);
       try {
-        const response = await fetch(`${process.env.REACT_APP_CUSTOMER_INVENTORY_URL}/payment`, {
+        const response = await fetch(`${process.env.REACT_APP_CUSTOMER_INVENTORY_URL}/checkout`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
