@@ -3,20 +3,48 @@ import Button from 'react-bootstrap/Button';
 import toastr from 'toastr';
 import { useShoppingCart } from '../../contexts/ShoppingCartContext';
 import CheckoutLineItem from '../../components/checkout/CheckoutLineItem/CheckoutLineItem';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Checkout = () => {
     const { cart, clearCart, getPriceTotal } = useShoppingCart();
 
-    async function createCheckoutSession() {
-      const selectedProducts = {
+    const [formData, setFormData] = useState({
+      postalCode: '',
+      address: '',
+      city: ''
+  });
+
+  const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData({
+          ...formData,
+          [name]: value
+      });
+  };
+
+  const isFormFilled = formData.postalCode && formData.address && formData.city;
+
+    async function createCheckoutSession(e) {
+      e.preventDefault();
+
+      const orderDetails = {
         items: cart.map((lineItem) => {
           return {
             productId: lineItem._id,
             quantity: lineItem.selectedQuantity
           }
-        })
+        }),
+        customer: {
+          firstName: 'getfromcookies',
+          lastName: 'getfromcookies',
+          email: 'getfromcookies',
+          city: formData.city,
+          postalCode: formData.postalCode,
+          address: formData.address,
+        }
       }
+
+      console.log(orderDetails);
 
       try {
         const response = await fetch(`${process.env.REACT_APP_CUSTOMER_INVENTORY_URL}/checkout`, {
@@ -24,7 +52,7 @@ const Checkout = () => {
           headers: {
             "Content-Type": "application/json"
           },
-          body: JSON.stringify(selectedProducts)
+          body: JSON.stringify(orderDetails)
         });
   
         if (response.ok) {
@@ -70,10 +98,29 @@ const Checkout = () => {
             <Button variant="danger" onClick={clearCart}>
               Clear shopping cart
             </Button>
-            <Button variant="primary" onClick={createCheckoutSession}>
-              Proceed to payment
-            </Button>
           </div>
+
+          <div className="checkout-form-container">
+            <form onSubmit={createCheckoutSession}>
+                <div className="checkout-form-group">
+                    <label className="checkout-form-label" htmlFor="postalCode">Postal Code:</label>
+                    <input type="text" id="postalCode" name="postalCode" value={formData.postalCode} onChange={handleChange} />
+                </div>
+                <div className="checkout-form-group">
+                    <label className="checkout-form-label" htmlFor="address">Address:</label>
+                    <input type="text" id="address" name="address" value={formData.address} onChange={handleChange} />
+                </div>
+                <div className="checkout-form-group">
+                    <label className="checkout-form-label" htmlFor="city">City:</label>
+                    <input type="text" id="city" name="city" value={formData.city} onChange={handleChange} />
+                </div>
+                <div className="checkout-form-button-container">
+                    <Button variant="primary" type="submit" disabled={!isFormFilled}>
+                        Proceed to payment
+                    </Button>
+                </div>
+            </form>
+        </div>
         </div>
   )
 }
