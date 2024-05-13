@@ -4,6 +4,8 @@ import toastr from 'toastr';
 import { useShoppingCart } from '../../contexts/ShoppingCartContext';
 import CheckoutLineItem from '../../components/checkout/CheckoutLineItem/CheckoutLineItem';
 import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+
 
 const Checkout = () => {
     const { cart, clearCart, getPriceTotal } = useShoppingCart();
@@ -26,6 +28,9 @@ const Checkout = () => {
 
     async function createCheckoutSession(e) {
       e.preventDefault();
+      const customerFirstName = Cookies.get('firstName');
+      const customerLastName = Cookies.get('lastName');
+      const customerEmail = Cookies.get('email');
 
       const orderDetails = {
         items: cart.map((lineItem) => {
@@ -35,9 +40,9 @@ const Checkout = () => {
           }
         }),
         customer: {
-          firstName: 'getfromcookies',
-          lastName: 'getfromcookies',
-          email: 'getfromcookies',
+          firstName: customerFirstName,
+          lastName: customerLastName,
+          email: customerEmail,
           city: formData.city,
           postalCode: formData.postalCode,
           address: formData.address,

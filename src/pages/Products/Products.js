@@ -6,21 +6,21 @@ import ProductCard from '../../components/products/ProductCard/ProductCard';
 const Products = () => {
     const [products, setProducts] = useState([]);
 
-useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_CUSTOMER_INVENTORY_URL}/products`);
-        const data = await response.json();
-        setProducts(data.data);
+  useEffect(() => {
+      async function fetchProducts() {
+        try {
+          const response = await fetch(`${process.env.REACT_APP_CUSTOMER_INVENTORY_URL}/products`);
+          const data = await response.json();
+          setProducts(data.data);
+        }
+        catch(error) {
+          console.log(error);
+          toastr.error('Could not get products. Please try again later.')
+        } 
       }
-      catch(error) {
-        console.log(error);
-        toastr.error('Could not get products. Please try again later.')
-      } 
-    }
 
-    fetchProducts();
-}, [])
+      fetchProducts();
+  }, [])
   return (
     <div className="product-list-container">
         {products.map(product => (
