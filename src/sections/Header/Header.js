@@ -5,6 +5,8 @@ import useSignOut from 'react-auth-kit/hooks/useSignOut';
 import './Header.css';
 import ShoppingCart from '../../components/shoppingCart/ShoppingCart/ShoppingCart';
 import logo from '../../assets/logo/DLS.png';
+import Cookies from 'js-cookie';
+
 
 const Header = () => {
   const signOut = useSignOut();
@@ -17,6 +19,9 @@ const Header = () => {
   }, [isAuthenticated]);
 
   function logout() {
+    Cookies.remove('firstName');
+    Cookies.remove('lastName');
+    Cookies.remove('email');
     signOut();
     setLoggedIn(false);
   }

@@ -5,6 +5,8 @@ import 'toastr/build/toastr.css';
 import { useNavigate } from 'react-router-dom';
 import useSignIn from 'react-auth-kit/hooks/useSignIn';
 import useIsAuthenticated from 'react-auth-kit/hooks/useIsAuthenticated';
+import Cookies from 'js-cookie';
+
 
 const Login = () => {
     const isAuthenticated = useIsAuthenticated();
@@ -51,6 +53,9 @@ const Login = () => {
                         lastName: data.lastName
                     }
                 });
+                Cookies.set('firstName', data.firstName);
+                Cookies.set('lastName', data.lastName);
+                Cookies.set('email', data.email);
                 navigate('/');
                 window.location.reload();
             }

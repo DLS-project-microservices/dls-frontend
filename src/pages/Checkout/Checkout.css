@@ -26,3 +26,29 @@ td {
     justify-content: space-between;
     margin-bottom: 50px;
 }
+
+.checkout-form-container {
+    display: flex;
+    justify-content: center;
+}
+
+.checkout-form-group {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.checkout-form-group input {
+    border-radius: 6px;
+    padding: 5px;
+}
+
+.checkout-form-button-container {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+.checkout-form-label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
