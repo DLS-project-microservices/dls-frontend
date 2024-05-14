@@ -16,6 +16,8 @@ const Login = () => {
     const [isFormValid, setIsFormValid] = useState(false);
     const signIn = useSignIn();
 
+    console.log(process.env.REACT_APP_AUTH_URL)
+
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/')
@@ -29,7 +31,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`${process.env.REACT_APP_AUTH_URL}/users/signin`, {
+            const response = await fetch(`http://localhost:5000/api/users/signin`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
