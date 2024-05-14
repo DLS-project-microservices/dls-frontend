@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:16
+FROM node:18
 
 # Set the working directory inside the container
 WORKDIR /usr/src/app
@@ -12,6 +12,14 @@ RUN npm install
 
 # Copy the rest of the application code to the working directory
 COPY . .
+
+# Define build arguments
+ARG REACT_APP_AUTH_URL
+ARG REACT_APP_CUSTOMER_INVENTORY_URL
+
+# Set environment variables
+ENV REACT_APP_AUTH_URL=$REACT_APP_AUTH_URL
+ENV REACT_APP_CUSTOMER_INVENTORY_URL=$REACT_APP_CUSTOMER_INVENTORY_URL
 
 # Build the React application
 RUN npm run build
