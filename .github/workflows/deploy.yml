@@ -28,15 +28,3 @@ jobs:
           docker build -t dlsmdar.azurecr.io/dls-frontend:${{ github.sha }} --build-arg REACT_APP_AUTH_URL=${{ secrets.REACT_APP_AUTH_URL }} --build-arg REACT_APP_CUSTOMER_INVENTORY_URL=${{ secrets.REACT_APP_CUSTOMER_INVENTORY_URL }} ./dls-frontend
           docker push mdlsmdar.azurecr.io.io/dls-frontend:${{ github.sha }}
 
-  deploy:
-    needs: build-and-push
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'customer-frontend'
-          slot-name: 'production'
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          images: 'myregistry.azurecr.io/dls-frontend:${{ github.sha }}'
