@@ -25,6 +25,6 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t dlsmdar.azurecr.io/dls-frontend:${{ github.sha }} --build-arg REACT_APP_AUTH_URL=${{ secrets.REACT_APP_AUTH_URL }} --build-arg REACT_APP_CUSTOMER_INVENTORY_URL=${{ secrets.REACT_APP_CUSTOMER_INVENTORY_URL }} ./dls-frontend
-          docker push mdlsmdar.azurecr.io.io/dls-frontend:${{ github.sha }}
-
+          docker buildx create --use
+          docker buildx inspect --bootstrap
+          docker buildx build --platform linux/amd64,linux/arm64 -t dlsmdar.azurecr.io/dls-frontend:${{ github.sha }} --build-arg REACT_APP_AUTH_URL=${{ secrets.REACT_APP_AUTH_URL }} --build-arg REACT_APP_CUSTOMER_INVENTORY_URL=${{ secrets.REACT_APP_CUSTOMER_INVENTORY_URL }} ./dls-frontend --push
